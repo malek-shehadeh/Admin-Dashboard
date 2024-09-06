@@ -192,11 +192,67 @@
 // };
 
 // export default App;
-///////////////////////////////////////
+// ///////////////////////////////////////
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import Sidebar from "./components/Sidebar";
+
+// import HomePage from "./pages/HomePage";
+// import ContactsPage from "./pages/ContactsPage";
+// import UsersPage from "./pages/UsersPage";
+// import ReviewsPage from "./pages/ReviewsPage";
+// import RecipesPage from "./pages/RecipesPage";
+// import ReportsPage from "./pages/ReportsPage";
+// import ChefRecruitmentPage from "./pages/ChefRecruitmentPage";
+// import DishesPage from "./pages/DishesPage";
+// import Login from "./pages/Login";
+// import { AuthProvider, useAuth } from "./AuthContext";
+
+// const DashboardLayout = ({ children }) => {
+//   return (
+//     <div className="flex h-screen bg-gray-100">
+//       <Sidebar />
+//       <main className="flex-1 p-8 overflow-y-auto">{children}</main>
+//     </div>
+//   );
+// };
+
+// const App = () => {
+//   const { isAuthenticated } = useAuth();
+//   return (
+//     <Router>
+//       <DashboardLayout>
+//         <Routes>
+//           <Route path="/Home" element={<HomePage />} />
+//           <Route path="/contacts" element={<ContactsPage />} />
+//           <Route path="/users" element={<UsersPage />} />
+//           <Route path="/reviews" element={<ReviewsPage />} />
+//           <Route path="/recipes" element={<RecipesPage />} />
+//           <Route path="/reports" element={<ReportsPage />} />
+//           <Route path="/chef-recruitment" element={<ChefRecruitmentPage />} />
+//           <Route path="/dishes" element={<DishesPage />} />
+//           <Route path="/" element={<Login />} />
+//         </Routes>
+//       </DashboardLayout>
+//     </Router>
+//   );
+// };
+
+// // export default App;
+
+// function AppWithAuth() {
+//   return (
+//     <AuthProvider>
+//       <App />
+//     </AuthProvider>
+//   );
+// }
+
+// export default AppWithAuth;
+/////////////////
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-
 import HomePage from "./pages/HomePage";
 import ContactsPage from "./pages/ContactsPage";
 import UsersPage from "./pages/UsersPage";
@@ -205,33 +261,64 @@ import RecipesPage from "./pages/RecipesPage";
 import ReportsPage from "./pages/ReportsPage";
 import ChefRecruitmentPage from "./pages/ChefRecruitmentPage";
 import DishesPage from "./pages/DishesPage";
+import Login from "./pages/Login";
+import { AuthProvider, useAuth } from "./AuthContext";
+import Orders from "./pages/OrdersPage";
 
 const DashboardLayout = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-      <main className="flex-1 p-8 overflow-y-auto">{children}</main>
+      {isAuthenticated && <Sidebar />}
+      <main
+        className={`flex-1 p-8 overflow-y-auto ${
+          isAuthenticated ? "" : "w-full"
+        }`}
+      >
+        {children}
+      </main>
     </div>
   );
 };
 
 const App = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Router>
       <DashboardLayout>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/contacts" element={<ContactsPage />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/reviews" element={<ReviewsPage />} />
-          <Route path="/recipes" element={<RecipesPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
-          <Route path="/chef-recruitment" element={<ChefRecruitmentPage />} />
-          <Route path="/dishes" element={<DishesPage />} />
+          {isAuthenticated ? (
+            <>
+              <Route path="/Home" element={<HomePage />} />
+              <Route path="/contacts" element={<ContactsPage />} />
+              <Route path="/users" element={<UsersPage />} />
+              <Route path="/reviews" element={<ReviewsPage />} />
+              <Route path="/recipes" element={<RecipesPage />} />
+              <Route path="/reports" element={<ReportsPage />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route
+                path="/chef-recruitment"
+                element={<ChefRecruitmentPage />}
+              />
+              <Route path="/dishes" element={<DishesPage />} />
+            </>
+          ) : (
+            <Route path="*" element={<Login />} />
+          )}
         </Routes>
       </DashboardLayout>
     </Router>
   );
 };
 
-export default App;
+function AppWithAuth() {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+}
+
+export default AppWithAuth;

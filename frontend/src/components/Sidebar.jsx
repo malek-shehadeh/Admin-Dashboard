@@ -67,10 +67,133 @@
 // }
 
 // export default Sidebar;
-/////////////
-import React from "react";
-import { Link } from "react-router-dom";
+// /////////////
+// import React from "react";
+// import { Link, useNavigate } from "react-router-dom";
 // import { useAuth } from "../AuthContext";
+// import {
+//   Grid,
+//   MessageSquare,
+//   ClipboardList,
+//   Bell,
+//   Users,
+//   Coffee,
+//   Book,
+//   LogOut,
+// } from "lucide-react";
+
+// function Sidebar() {
+//   const { logout } = useAuth();
+//   const navigate = useNavigate();
+
+//   const handleLogout = () => {
+//     logout();
+//     navigate("/");
+//   };
+//   return (
+//     <nav className="w-64 bg-white shadow-lg h-screen">
+//       <div className="p-4">
+//         <h1 className="text-xl font-semibold text-gray-800">Admin</h1>
+//       </div>
+//       <ul className="mt-4">
+//         <li className="mb-2">
+//           <Link
+//             to="/Home"
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+//           >
+//             <Grid className="mr-2" size={18} />
+//             Home
+//           </Link>
+//         </li>
+//         <li className="mb-2">
+//           <Link
+//             to="/contacts"
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+//           >
+//             <MessageSquare className="mr-2" size={18} />
+//             Contacts
+//           </Link>
+//         </li>
+//         <li className="mb-2">
+//           <Link
+//             to="/users"
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+//           >
+//             <Users className="mr-2" size={18} />
+//             Users
+//           </Link>
+//         </li>
+//         <li className="mb-2">
+//           <Link
+//             to="/reviews"
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+//           >
+//             <ClipboardList className="mr-2" size={18} />
+//             Reviews
+//           </Link>
+//         </li>
+//         <li className="mb-2">
+//           <Link
+//             to="/recipes"
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+//           >
+//             <Book className="mr-2" size={18} />
+//             All Recipes
+//           </Link>
+//         </li>
+//         <li className="mb-2">
+//           <Link
+//             to="/reports"
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+//           >
+//             <Bell className="mr-2" size={18} />
+//             Reports
+//           </Link>
+//         </li>
+//         <li className="mb-2">
+//           <Link
+//             to="/chef-recruitment"
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+//           >
+//             <Users className="mr-2" size={18} />
+//             Chef Requests
+//           </Link>
+//         </li>
+//         <li className="mb-2">
+//           <Link
+//             to="/dishes"
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+//           >
+//             <Coffee className="mr-2" size={18} />
+//             All Dishes
+//           </Link>
+//         </li>
+//         <li className="mb-2">
+//           {/* <button
+//             onClick={logout}
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white w-full"
+//           >
+//             <LogOut className="mr-2" size={18} />
+//             Logout
+//           </button> */}
+
+//           <button
+//             onClick={handleLogout}
+//             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white w-full"
+//           >
+//             <LogOut size={18} /> <span>Logout</span>
+//           </button>
+//         </li>
+//       </ul>
+//     </nav>
+//   );
+// }
+
+// export default Sidebar;
+///////////////
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 import {
   Grid,
   MessageSquare,
@@ -83,7 +206,17 @@ import {
 } from "lucide-react";
 
 function Sidebar() {
-  //   const { logout } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <nav className="w-64 bg-white shadow-lg h-screen">
@@ -93,7 +226,7 @@ function Sidebar() {
       <ul className="mt-4">
         <li className="mb-2">
           <Link
-            to="/"
+            to="/Home"
             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
           >
             <Grid className="mr-2" size={18} />
@@ -147,7 +280,7 @@ function Sidebar() {
         </li>
         <li className="mb-2">
           <Link
-            to="/requests"
+            to="/chef-recruitment"
             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
           >
             <Users className="mr-2" size={18} />
@@ -163,12 +296,24 @@ function Sidebar() {
             All Dishes
           </Link>
         </li>
-        {/* <li className="mb-2">
-          <button onClick={logout} className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white w-full">
+        <li className="mb-2">
+          <Link
+            to="/orders"
+            className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
+          >
+            <Coffee className="mr-2" size={18} />
+            Orders
+          </Link>
+        </li>
+        <li className="mb-2">
+          <button
+            onClick={handleLogout}
+            className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white w-full"
+          >
             <LogOut className="mr-2" size={18} />
             Logout
           </button>
-        </li> */}
+        </li>
       </ul>
     </nav>
   );

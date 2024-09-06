@@ -1,22 +1,51 @@
-// backend/models/Recipe.js
 const mongoose = require("mongoose");
 
-const recipeSchema = new mongoose.Schema(
-  {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    title: { type: String, required: true },
-    description: { type: String },
-    category: { type: String, required: true },
-    ingredients: [{ type: String, required: true }],
-    instructions: [{ type: String, required: true }],
-    cookTime: { type: Number, required: true },
-    isApproved: { type: Boolean, default: false },
+const ingredientSchema = new mongoose.Schema({
+  type: String,
+  quantity: Number,
+  unit: String,
+  alternative: String,
+});
+
+const nutritionSchema = new mongoose.Schema({
+  protein: Number,
+  fat: Number,
+  carbs: Number,
+  calories: Number,
+  vitamins: String,
+});
+
+const recipeSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  servings: { type: Number, required: true },
+  ingredients: [ingredientSchema],
+  briefDescription: String,
+  comprehensiveDescription: String,
+  mainImage: String,
+  subImages: [String],
+  video: String,
+  cookingTime: {
+    hours: Number,
+    minutes: Number,
   },
-  { timestamps: true }
-);
+  cuisineType: String,
+  mealType: String,
+  nutritionValues: nutritionSchema,
+  difficulty: String,
+  mealPrepFriendly: Boolean,
+  freezableRecipe: Boolean,
+  dietaryRestrictions: String,
+  chefId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Users",
+    required: true,
+  },
+  rating: { type: Number, default: 0 },
+  isDeleted: { type: Boolean, default: false },
+  approved: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 module.exports = mongoose.model("Recipe", recipeSchema);
