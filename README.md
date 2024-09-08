@@ -1,8 +1,7 @@
-# Dynamic Recipe Hub Admin Dashboard
 
 ## Project Overview
 
-The **Dynamic Recipe Hub** is a web-based platform that allows chefs to organize, manage, share, and sell their dishes. The **Admin Dashboard** is a crucial part of this platform, accessible only by administrators. It provides tools for managing recipes, dish listings, user accounts, user reports, and marketplace transactions.
+The **Little-Italy-Food** is a web-based platform that allows chefs to organize, manage, share, and sell their dishes. The **Admin Dashboard** is a crucial part of this platform, accessible only by administrators. It provides tools for managing recipes, dish listings, user accounts, user reports, and marketplace transactions.
 
 ### Features:
 
