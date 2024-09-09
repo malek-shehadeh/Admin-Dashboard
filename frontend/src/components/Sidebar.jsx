@@ -251,7 +251,7 @@ function Sidebar() {
             Users
           </Link>
         </li>
-        <li className="mb-2">
+        {/* <li className="mb-2">
           <Link
             to="/reviews"
             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
@@ -259,7 +259,7 @@ function Sidebar() {
             <ClipboardList className="mr-2" size={18} />
             Reviews
           </Link>
-        </li>
+        </li> */}
         <li className="mb-2">
           <Link
             to="/recipes"
@@ -301,7 +301,8 @@ function Sidebar() {
             to="/orders"
             className="flex items-center px-4 py-2 text-gray-700 hover:bg-orange-500 hover:text-white"
           >
-            <Coffee className="mr-2" size={18} />
+            {/* <Coffee className="mr-2" size={18} />        */}
+            <ClipboardList className="mr-2" size={18} />
             Orders
           </Link>
         </li>
